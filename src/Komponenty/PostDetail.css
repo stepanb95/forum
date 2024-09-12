@@ -1,0 +1,17 @@
+
+.post-detail {
+    margin-top: 20px;
+    text-align: left;
+  }
+  .comments-section {
+    margin-top: 20px;
+  }
+  .comments-section ul {
+    list-style: none;
+    padding: 0;
+  }
+  .comments-section li {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+  }
+  

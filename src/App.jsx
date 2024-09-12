@@ -1,27 +1,53 @@
+
+import React, { useState, useEffect } from 'react';
+import Navbar from './Komponenty/Navbar';
+import PostList from './Komponenty/PostList';
+import PostForm from './Komponenty/PostForm';
+import PostDetail from './Komponenty/PostDetail';
 import './App.css';
 
 function App() {
+  const [posts, setPosts] = useState([]);
+  const [selectedPost, setSelectedPost] = useState(null);
+
+  useEffect(() => {
+    const savedPosts = JSON.parse(localStorage.getItem('posts')) || [];
+    setPosts(savedPosts);
+  }, []);
+
+  
+  useEffect(() => {
+    localStorage.setItem('posts', JSON.stringify(posts));
+  }, [posts]);
+
+  const addPost = (post) => {
+    setPosts([...posts, post]);
+  };
+
+  const selectPost = (post) => {
+    setSelectedPost(post);
+  };
+
+  const addComment = (postId, comment) => {
+    setPosts(posts.map(post => {
+      if (post.id === postId) {
+        return { ...post, comments: [...post.comments, comment] };
+      }
+      return post;
+    }));
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src="Octocat.png" className="App-logo" alt="logo" />
-        <p>
-          GitHub Codespaces <span className="heart">♥️</span> React
-        </p>
-        <p className="small">
-          Edit <code>src/App.jsx</code> and save to reload.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </p>
-      </header>
+      <Navbar />
+      {!selectedPost ? (
+        <>
+          <PostForm addPost={addPost} />
+          <PostList posts={posts} selectPost={selectPost} />
+        </>
+      ) : (
+        <PostDetail post={selectedPost} addComment={addComment} />
+      )}
     </div>
   );
 }

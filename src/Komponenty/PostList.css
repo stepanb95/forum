@@ -1,0 +1,14 @@
+
+.post-list {
+    margin-top: 20px;
+  }
+  .post-summary {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px 0;
+    cursor: pointer;
+  }
+  .sort-options {
+    margin-bottom: 10px;
+  }
+  
